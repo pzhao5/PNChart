@@ -28,8 +28,9 @@
         CGFloat startAngle = clockwise ? -90.0f : 270.0f;
         CGFloat endAngle = clockwise ? -90.01f : 270.01f;
 
+        CGPoint center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
         _lineWidth = @8.0f;
-        UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds)) radius:CGRectGetMidY(self.bounds) startAngle:DEGREES_TO_RADIANS(startAngle) endAngle:DEGREES_TO_RADIANS(endAngle) clockwise:clockwise];
+        UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:center radius:CGRectGetMidY(self.bounds) startAngle:DEGREES_TO_RADIANS(startAngle) endAngle:DEGREES_TO_RADIANS(endAngle) clockwise:clockwise];
 
         _circle               = [CAShapeLayer layer];
         _circle.path          = circlePath.CGPath;
@@ -55,14 +56,13 @@
         [_countingLabel setFont:[UIFont boldSystemFontOfSize:16.0f]];
         [_countingLabel setTextColor:[UIColor grayColor]];
         [_countingLabel setBackgroundColor:[UIColor clearColor]];
-        [_countingLabel setCenter:CGPointMake(self.center.x, self.center.y)];
+        [_countingLabel setCenter:center];
         _countingLabel.method = UILabelCountingMethodEaseInOut;
         [self addSubview:_countingLabel];;
     }
 
     return self;
 }
-
 
 - (void)strokeChart
 {
