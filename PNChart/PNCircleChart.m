@@ -91,8 +91,8 @@
     _circle.strokeColor = _strokeColor.CGColor;
 
     _circle.strokeEnd   = [_current floatValue] / [_total floatValue];
-    _countingLabel.text = [NSString stringWithFormat:format, [(int)[_current floatValue]];
-        
+    self.countingLabel.text = [NSString stringWithFormat:format, (int)[_current floatValue]];
+
     // Check if user wants to add a gradient from the start color to the bar color
     if (_strokeColorGradientStart) {
         
