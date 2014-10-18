@@ -82,8 +82,6 @@
         break;
     }
     self.countingLabel.format = format;
-    [self addSubview:self.countingLabel];
-
 
     // Add circle params
 
@@ -92,18 +90,9 @@
     _circleBG.strokeEnd = 1.0;
     _circle.strokeColor = _strokeColor.CGColor;
 
-    // Add Animation
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = self.duration;
-    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    pathAnimation.fromValue = @0.0f;
-    pathAnimation.toValue = @([_current floatValue] / [_total floatValue]);
-    [_circle addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
     _circle.strokeEnd   = [_current floatValue] / [_total floatValue];
-
-    [_countingLabel countFrom:0 to:[_current floatValue] withDuration:self.duration];
-    
-    
+    _countingLabel.text = [NSString stringWithFormat:format, [(int)[_current floatValue]];
+        
     // Check if user wants to add a gradient from the start color to the bar color
     if (_strokeColorGradientStart) {
         
@@ -133,8 +122,6 @@
         [_circle addSublayer:gradientLayer];
         
         gradientMask.strokeEnd = [_current floatValue] / [_total floatValue];
-        
-        [gradientMask addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
     }
 
 }
