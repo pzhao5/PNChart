@@ -83,6 +83,8 @@
     }
     self.countingLabel.format = format;
 
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
     // Add circle params
 
     _circle.lineWidth   = [_lineWidth floatValue];
@@ -123,7 +125,7 @@
         
         gradientMask.strokeEnd = [_current floatValue] / [_total floatValue];
     }
-
+    [CATransaction commit];
 }
 
 
