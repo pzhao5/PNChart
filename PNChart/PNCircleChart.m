@@ -132,16 +132,20 @@
 {
     NSNumber *updatedValue = [NSNumber numberWithFloat:[_current floatValue] + [growAmount floatValue]];
     
-    // Add animation
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = self.duration;
-    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    pathAnimation.fromValue = @([_current floatValue] / [_total floatValue]);
-    pathAnimation.toValue = @([updatedValue floatValue] / [_total floatValue]);
+    if (self.duration != 0) {
+      // Add animation
+      CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+      pathAnimation.duration = self.duration;
+      pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+      pathAnimation.fromValue = @([_current floatValue] / [_total floatValue]);
+      pathAnimation.toValue = @([updatedValue floatValue] / [_total floatValue]);
+      [_circle addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+      [self.countingLabel countFrom:fmin([_current floatValue], [_total floatValue]) to:fmin([_current floatValue] + [growAmount floatValue], [_total floatValue]) withDuration:self.duration];
+    } else {
+      self.countingLabel.text = [NSString stringWithFormat:format, (int)[updatedValue floatValue]];
+    }
+
     _circle.strokeEnd   = [updatedValue floatValue] / [_total floatValue];
-    [_circle addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
-    
-    [self.countingLabel countFrom:fmin([_current floatValue], [_total floatValue]) to:fmin([_current floatValue] + [growAmount floatValue], [_total floatValue]) withDuration:self.duration];
     _current = updatedValue;
 }
 
